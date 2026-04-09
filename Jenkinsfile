@@ -8,20 +8,19 @@ pipeline {
 
     environment {
         AWS_DEFAULT_REGION = 'ap-south-1'
-        S3_BUCKET = 'devopssampleapp'
+        S3_BUCKET = 'devopssampleapp-frontend'
         APP_NAME = 'FrontendSampleApp'
     }
 
     stages {
 
         stage('Checkout') {
-            steps {
-                deleteDir()
-                git branch: 'main',
-                    url: 'https://github.com/TejasG30/my-pizza-online-order.git',
-                    credentialsId: 'github-pat'
-            }
-        }
+    steps {
+        git branch: 'main',
+            url: 'https://github.com/TejasG30/my-pizza-online-order.git',
+            credentialsId: 'github-pat'
+    }
+}
 
         stage('Validate') {
             steps {
