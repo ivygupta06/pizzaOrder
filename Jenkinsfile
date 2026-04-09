@@ -12,14 +12,15 @@ pipeline {
         APP_NAME = 'FrontendSampleApp'
     }
 
-    stages {
+     
 
-        stage('Checkout') {
+       stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/TejasG30/my-pizza-online-order.git'
-		credentialsId: 'github-pat'
+                credentialsId: 'github-pat'
             }
         }
+
 
         stage('Validate') {
             steps {
