@@ -16,6 +16,10 @@ resource "aws_s3_bucket_public_access_block" "public" {
 resource "aws_s3_bucket_policy" "cloudfront_access" {
   bucket = aws_s3_bucket.site.id
 
+  depends_on = [
+    aws_cloudfront_distribution.cdn
+  ]
+
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
