@@ -12,15 +12,16 @@ pipeline {
         APP_NAME = 'FrontendSampleApp'
     }
 
-     
+    stages {
 
-       stage('Checkout') {
+        stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/TejasG30/my-pizza-online-order.git'
-                credentialsId: 'github-pat'
+                deleteDir()
+                git branch: 'main',
+                    url: 'https://github.com/TejasG30/my-pizza-online-order.git',
+                    credentialsId: 'github-pat'
             }
         }
-
 
         stage('Validate') {
             steps {
@@ -30,57 +31,22 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                sh 'npm install --legacy-peer-deps'
             }
         }
 
         stage('SonarQube Analysis') {
-    steps {
-        script {
-            def scannerHome = tool 'sonar-scanner'
-            withSonarQubeEnv('sonarqube') {
-                sh """
-                ${scannerHome}/bin/sonar-scanner \
-                -Dsonar.projectKey=frontend-app \
-                -Dsonar.projectName=Frontend-App \
-                -Dsonar.sources=src
-                """
-            }
-        }
-    }
-}
-
-        //  BUILD STAGE (ADDED)
-       stage('Build Angular App') {
-    steps {
-        sh '''
-        NODE_OPTIONS=--openssl-legacy-provider npx ng build --configuration production
-        '''
-    }
-}
-
-        //  Terraform - Create S3
-        stage('Terraform Init') {
             steps {
-                sh 'terraform -chdir=terraform/site init'
-            }
-        }
-
-        stage('Terraform Apply') {
-            steps {
-                withAWS(credentials: 'aws-creds', region: 'ap-south-1') {
-                    sh 'terraform -chdir=terraform/site apply -auto-approve'
-                }
-            }
-        }
-
-        //  Deploy Build to S3
-        stage('Deploy to S3') {
-            steps {
-                withAWS(credentials: 'aws-creds', region: 'ap-south-1') {
-                    sh '''
-                    aws s3 sync dist/$APP_NAME/ s3://$S3_BUCKET --delete
-                    '''
+                script {
+                    def scannerHome = tool 'sonar-scanner'
+                    withSonarQubeEnv('sonarqube') {
+                        sh """
+                        ${scannerHome}/bin/sonar-scanner \
+                        -Dsonar.projectKey=frontend-app \
+                        -Dsonar.projectName=Frontend-App \
+                        -Dsonar.sources=src
+                        """
+                    }
                 }
             }
         }
