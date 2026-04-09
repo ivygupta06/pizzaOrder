@@ -1,5 +1,5 @@
 resource "aws_cloudfront_origin_access_control" "oac" {
-  name                              = "s3-oac"
+  name                              = "s3-oac-devops"
   description                       = "Origin Access Control for S3 static website"
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
