@@ -52,3 +52,41 @@ pipeline {
         }
     }
 }
+
+//  BUILD STAGE (ADDED)
+       stage('Build Angular App') {
+    steps {
+        sh '''
+        NODE_OPTIONS=--openssl-legacy-provider npx ng build --configuration production
+        '''
+    }
+}
+
+        //  Terraform - Create S3
+        stage('Terraform Init') {
+            steps {
+                sh 'terraform -chdir=terraform/site init'
+            }
+        }
+
+        stage('Terraform Apply') {
+            steps {
+                withAWS(credentials: 'aws-creds', region: 'ap-south-1') {
+                    sh 'terraform -chdir=terraform/site apply -auto-approve'
+                }
+            }
+        }
+
+        //  Deploy Build to S3
+        stage('Deploy to S3') {
+            steps {
+                withAWS(credentials: 'aws-creds', region: 'ap-south-1') {
+                    sh '''
+                    aws s3 sync dist/$APP_NAME/ s3://$S3_BUCKET --delete
+                    '''
+                }
+            }
+        }
+    }
+}
+
