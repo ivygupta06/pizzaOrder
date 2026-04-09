@@ -9,7 +9,7 @@ pipeline {
     environment {
         AWS_DEFAULT_REGION = 'ap-south-1'
         S3_BUCKET = 'devopssampleapp-frontend'
-        APP_NAME = 'FrontendSampleApp'
+        APP_NAME = 'my-pizza-order-online'
     }
 
     stages {
