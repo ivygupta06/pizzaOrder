@@ -50,19 +50,15 @@ pipeline {
                 }
             }
         }
-    }
-}
 
-//  BUILD STAGE (ADDED)
-       stage('Build Angular App') {
-    steps {
-        sh '''
-        NODE_OPTIONS=--openssl-legacy-provider npx ng build --configuration production
-        '''
-    }
-}
+        stage('Build Angular App') {
+            steps {
+                sh '''
+                NODE_OPTIONS=--openssl-legacy-provider npx ng build --configuration production
+                '''
+            }
+        }
 
-        //  Terraform - Create S3
         stage('Terraform Init') {
             steps {
                 sh 'terraform -chdir=terraform/site init'
@@ -77,7 +73,6 @@ pipeline {
             }
         }
 
-        //  Deploy Build to S3
         stage('Deploy to S3') {
             steps {
                 withAWS(credentials: 'aws-creds', region: 'ap-south-1') {
@@ -89,4 +84,3 @@ pipeline {
         }
     }
 }
-
