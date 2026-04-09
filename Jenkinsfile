@@ -16,7 +16,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/TejasG30/ForntendSampleApp.git'
+                git branch: 'main', url: 'https://github.com/TejasG30/my-pizza-online-order.git'
             }
         }
 
