@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "site" {
-  bucket = "DevopsSampleApp"   
+  bucket = "devopssampleapp"   
 }
 
 # Allow public access (for static website)
