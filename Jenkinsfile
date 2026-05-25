@@ -68,10 +68,6 @@ pipeline {
             steps {
         script {
 
-            withCredentials([
-                    [$class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'aws-creds']
-                ])
 	    sh '''
             terraform -chdir=terraform/site init
 
