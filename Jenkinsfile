@@ -68,7 +68,11 @@ pipeline {
             steps {
         script {
 
-            sh '''
+            withCredentials([
+                    [$class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'aws-creds']
+                ])
+	    sh '''
             terraform -chdir=terraform/site init
 
             terraform -chdir=terraform/site apply -auto-approve || true
