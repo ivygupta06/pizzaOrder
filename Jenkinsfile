@@ -18,7 +18,7 @@ pipeline {
     steps {
         git branch: 'main',
             url: 'https://github.com/TejasG30/my-pizza-online-order.git',
-            credentialsId: 'github-pat'
+            credentialsId: 'pizza-repo'
     }
 }
 
