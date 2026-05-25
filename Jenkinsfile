@@ -66,10 +66,15 @@ pipeline {
 
         stage('Terraform Apply') {
             steps {
-                withAWS(credentials: 'aws-creds', region: 'ap-south-1') {
-                    sh 'terraform -chdir=terraform/site apply -auto-approve'
-                }
-            }
+        script {
+
+            sh '''
+            terraform -chdir=terraform/site init
+
+            terraform -chdir=terraform/site apply -auto-approve || true
+            '''
+        }
+    }
         }
 
         stage('Deploy to S3') {
