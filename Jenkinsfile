@@ -1,6 +1,9 @@
 pipeline {
     agent any
 
+    tools {
+      nodejs 'node18'
+      jdk 'jdk17'
 
     environment {
         AWS_DEFAULT_REGION = 'ap-south-1'
