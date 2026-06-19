@@ -17,7 +17,7 @@ pipeline {
         stage('Checkout') {
     steps {
         git branch: 'main',
-            url: 'https://github.com/TejasG30/my-pizza-online-order.git',
+            url: 'https://github.com/ivygupta06/pizzaOrder.git',
             credentialsId: 'pizza-repo'
     }
 }
