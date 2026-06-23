@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "site" {
-  bucket = "devopssampleapp-frontend"
+  bucket = "devopssampleappIVY-frontend"
 }
 
 # Block ALL public access 
